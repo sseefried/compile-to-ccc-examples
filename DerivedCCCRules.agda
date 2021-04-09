@@ -42,3 +42,25 @@ composeFork a b f = begin
     f ∘ (a △ b)
   ∎
   where open ≡-Reasoning
+
+compose : ∀  (f : B → C) → (g : A → B) → (λ p → f (g p)) ≡ f ∘ g
+compose f g = begin
+    (λ p → f (g p))
+  ≡⟨⟩ -- Definition of composea
+    f ∘ g
+  ∎
+  where open ≡-Reasoning
+
+fork : ∀ (a : X → A) (b : X → B) (f : A × B → C) → (λ p → (a p , b p)) ≡ f ∘ (a △ b)
+fork a b f = begin
+    (λ p → f (a p , b p))
+  ≡⟨⟩ -- application rule
+    apply ∘ ((λ p → f) △ λ p → (a p , b p))
+  ≡⟨⟩ -- Definition of △
+    apply ∘ ((λ p → f) △ (a △ b))
+  ≡⟨⟩ -- Const rule
+    apply ∘ ((const f) △ (a △ b))
+  ≡⟨⟩ -- applyConstFork rule above
+    f ∘ (a △ b)
+  ∎
+  where open ≡-Reasoning
