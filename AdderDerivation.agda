@@ -42,17 +42,17 @@ adder = λ (a , b , c) → xor (a , xor (b , c ))
 applyConstFork : ∀ (f : B → C) (g : A → B) → (apply ∘ ((const f) △ g)) ≡ f ∘ g
 applyConstFork f g = begin
      apply ∘ ((const f) △ g)
- ≡⟨⟩
+ ≡⟨⟩ -- definition of △
      apply ∘ (λ x → (const f x , g x))
- ≡⟨⟩
+ ≡⟨⟩ -- Definition of const
      apply ∘ (λ x → (f , g x))
- ≡⟨⟩
+ ≡⟨⟩ -- Definition of ∘
      (λ y → apply ((λ x → (f , g x)) y)) -- lambdas require brackets around them due to binding precendence
- ≡⟨⟩
+ ≡⟨⟩ -- simplify
      (λ y → apply (f , g y))
- ≡⟨⟩
+ ≡⟨⟩ -- Definition of apply
      (λ y → f (g y))
- ≡⟨⟩
+ ≡⟨⟩ -- Definition of ∘
      f ∘ g
  ∎
   where open ≡-Reasoning
