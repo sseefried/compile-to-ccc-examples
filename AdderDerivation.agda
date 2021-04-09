@@ -47,7 +47,7 @@ applyConstFork f g = begin
  ≡⟨⟩ -- Definition of const
      apply ∘ (λ x → (f , g x))
  ≡⟨⟩ -- Definition of ∘
-     (λ y → apply ((λ x → (f , g x)) y)) -- lambdas require brackets around them due to binding precendence
+     (λ y → apply ((λ x → (f , g x)) y)) -- lambdas require brackets around them due to binding precedence
  ≡⟨⟩ -- simplify
      (λ y → apply (f , g y))
  ≡⟨⟩ -- Definition of apply
