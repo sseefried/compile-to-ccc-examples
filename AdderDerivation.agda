@@ -15,7 +15,7 @@ private
 
 infixr 7 _△_
 
-_△_ : (A → B) → (A → C) → (A -> B × C)
+_△_ : (A → B) → (A → C) → (A → B × C)
 f △ g = λ x → (f x , g x)
 
 _∘_ : (B → C) → (A → B) → (A → C)
