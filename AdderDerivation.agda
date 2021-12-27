@@ -51,3 +51,34 @@ simplerAdderDerivation = begin
     (xor ∘ (exl △ (xor ∘ ((exl ∘ exr) △ (exr ∘ exr)))))
   ∎
   where open ≡-Reasoning
+
+
+adderDerivation3 : (λ (a , b , c) → xor (a , xor (b , c ))) ≡ (xor ∘ (exl △ (xor ∘ ((exl ∘ exr) △ (exr ∘ exr)))))
+adderDerivation3 = begin
+    (λ (a , b , c) → xor (a , xor (b , c )))
+ ≡⟨⟩ -- desugar pairs
+    (λ p → xor (exl p , xor ((exl ∘ exr) p , (exr ∘ exr) p)))
+ ≡⟨⟩ -- (λ x → f U) ↦ f ∘ (λ x → U)
+   xor ∘ (λ p → (exl p , xor ((exl ∘ exr) p , (exr ∘ exr) p)))
+ ≡⟨⟩ -- λp → U V ↦ λp → U △ λp → V
+   xor ∘ ((λ p → exl p) △ (λ p → xor ((exl ∘ exr) p , (exr ∘ exr) p)))
+ ≡⟨⟩ -- eta contraction
+   xor ∘ (exl △ (λ p → xor ((exl ∘ exr) p , (exr ∘ exr) p)))
+ ≡⟨⟩ -- (λ x → f U) ↦ f ∘ (λ x → U)
+   xor ∘ (exl △ (xor ∘ (λ p → (exl ∘ exr) p , (exr ∘ exr) p)))
+ ≡⟨⟩ -- λp → U V ↦ λp → U △ λp → V 
+   xor ∘ (exl △ (xor ∘ ((λ p → (exl ∘ exr) p) △ (λ p →  (exr ∘ exr) p))))
+ ≡⟨⟩ -- eta contraction, twice
+   xor ∘ (exl △ (xor ∘ ((exl ∘ exr) △ (exr ∘ exr))))
+  ∎
+  where open ≡-Reasoning
+
+compDerivation : {A B C : Set} {f : B → C} {g : A → B} → (λ x → f (g x)) ≡ f ∘ g
+compDerivation {f = f} {g = g} = begin
+    (λ x → f (g x))
+  ≡⟨⟩ -- (λ x → f U) ↦ f ∘ (λ x → U)
+    f ∘ (λ x → g x )
+  ≡⟨⟩ -- eta contraction
+    f ∘ g
+   ∎
+  where open ≡-Reasoning
